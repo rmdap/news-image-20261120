@@ -16,8 +16,12 @@ DST = os.path.join(OUT_DIR, "entry.png")
 
 
 def main():
+    if not os.path.isfile(SRC):
+        raise SystemExit(f"missing bundled image: {SRC}")
     os.makedirs(OUT_DIR, exist_ok=True)
     shutil.copyfile(SRC, DST)
+    if os.path.getsize(DST) != os.path.getsize(SRC):
+        raise SystemExit("output size mismatch after copy")
 
 
 if __name__ == "__main__":
